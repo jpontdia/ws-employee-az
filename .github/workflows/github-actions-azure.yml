@@ -4,6 +4,8 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
       - name: Code Checkout
         uses: actions/checkout@v2
       - name: 'Login via Azure CLI'
@@ -35,5 +37,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/jpworks/ws-employee-az:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/jpworks/ws-employee-az:${{ github.sha }}
+          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/jpworks/ws-employee-az:${SHORT_SHA}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/jpworks/ws-employee-az:${SHORT_SHA}

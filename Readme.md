@@ -104,7 +104,7 @@ jpworks/ws-employee-az:1.0.3
 
 ```
 
-### Deploy image to Azure Container registry
+### Deploy image manually to Azure Container registry
 
 ```bash
 az acr login -n myloginserver.azurecr.io
@@ -112,3 +112,23 @@ az acr login -n myloginserver.azurecr.io
 The login server endpoint suffix '.azurecr.io' is automatically omitted.
 Login Succeeded
 ```
+
+### Deploy image to azure using GitHub Actions
+The project uses GitHub Actions for building and deploying the docker image folder to Azure Registry.
+The workflow is in file: src/.github/github-actions-azure.yml
+
+The workflow uses the next environment variables stored as secrets in the GitHub repository
+| Variable      | Description |
+| ----------- | ----------- |
+| DATABASE_URL       | Database URL connection|
+| DATABASE_USER      | Database user |
+| DATABASE_PASSWORD  | Database password  |
+| AZURE_CREDENTIALS       | See below section: Connecting GitHub Actions to Microsoft Azure |
+| REGISTRY_LOGIN_SERVER      | See below section: Connecting GitHub Actions to Microsoft Azure |
+| REGISTRY_USERNAME  | See below section: Connecting GitHub Actions to Microsoft Azure  |
+| REGISTRY_PASSWORD       | See below section: Connecting GitHub Actions to Microsoft Azure |
+| RESOURCE_GROUP      | See below section: Connecting GitHub Actions to Microsoft Azure |
+
+#### Connecting GitHub Actions to Microsoft Azure
+Follow the next document to configure your Azure Container Registry for GitHub Actions: [Configure a GitHub action to create a container instance]
+(https://docs.microsoft.com/en-us/azure/container-instances/container-instances-github-action)
