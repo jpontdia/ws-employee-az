@@ -16,6 +16,8 @@ The tech stack for this POC is:
 * Maven - https://maven.apache.org/download.cgi
 * Docker - https://www.docker.com/products/docker-desktop
 * Postgresql - https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+* Azure CLI - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+* A free account of Azure
 
 ### Database
 Next is the database entity model:
@@ -45,13 +47,13 @@ set DATABASE_PASSWORD=mypassword
 
 Run the Spring Boot application:
 ```bash
-mvc spring-boot:run
+mvn clean package spring-boot:run
 ```
 
 ### Dockerized Application
-Create with docker a local container for testing the image. In this example we are going to name the repository: jpworks/ws-employee-az  
+Create with docker a local container for testing the image. In this example we are going to name the repository: jpworks/ws-employee-az. Everytime you update your code and create an image be sure to run 'mvn clean package'  
 ```bash
-docker build -t jpworks/ws-employee-az .
+docker build -t jpworks/ws-employee-az:1.0.3 .
 
 [+] Building 2.1s (8/8) FINISHED
  => [internal] load build definition from Dockerfile                                                                            0.0s
@@ -74,5 +76,39 @@ Use 'docker scan' to run Snyk tests against images to find vulnerabilities and l
 
 Run the image, replace the values of the environmental variables with your database connection:
 ```bash
-docker run jpworks/ws-employee-az -d -p 80:80 -e DATABASE_URL='jdbc:postgresql://ec2-54.compute-1.amazonaws.com:5432/dcfcb4766bbcc' -e DATABASE_USER='user' -e DATABASE_PASSWORD='password'
+docker run -p 80:80 ^
+--env DATABASE_URL=jdbc:postgresql://ec2-54.compute-1.amazonaws.com:5432/dcfcb4766bbcc ^
+--env DATABASE_USER=myuser ^
+--env DATABASE_PASSWORD=mypassword ^
+jpworks/ws-employee-az:1.0.3
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.3.RELEASE)
+
+2021-04-27 06:24:57.032  INFO 1 --- [           main] c.j.d.employee.EmployeeApplication       : Starting EmployeeApplication v1.0.3 on 94702582d48e with PID 1 (/app.jar started by spring in /)
+2021-04-27 06:24:57.034 DEBUG 1 --- [           main] c.j.d.employee.EmployeeApplication       : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+2021-04-27 06:24:57.034  INFO 1 --- [           main] c.j.d.employee.EmployeeApplication       : The following profiles are active: local
+2021-04-27 06:24:58.048  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2021-04-27 06:24:58.117  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64ms. Found 1 JDBC repository interfaces.
+2021-04-27 06:24:58.635  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 80 (http)
+..
+..
+2021-04-27 06:25:01.658  INFO 1 --- [           main] c.j.d.employee.EmployeeApplication       : Started EmployeeApplication in 5.481 seconds (JVM running for 6.11)
+2021-04-27 06:25:01.660  INFO 1 --- [           main] c.j.d.employee.EmployeeApplication       : Application version: com.jpworks:ws-employee-az:ws-employee-az:1.0.3, 2021-04-27T05:36:32.583Z
+
+```
+
+### Deploy image to Azure Container registry
+
+```bash
+az acr login -n myloginserver.azurecr.io
+
+The login server endpoint suffix '.azurecr.io' is automatically omitted.
+Login Succeeded
 ```
