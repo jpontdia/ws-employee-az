@@ -35,5 +35,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-        docker build . -t jpworks/ws-employee-az:${{ github.sha }}
-        docker push jpworks/ws-employee-az:${{ github.sha }}
+          docker build . -t jpworks/ws-employee-az:${{ github.sha }}
+          docker push jpworks/ws-employee-az:${{ github.sha }}
