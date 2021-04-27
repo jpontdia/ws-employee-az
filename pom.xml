@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+  <parent> 
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-parent</artifactId>  
+    <version>2.3.3.RELEASE</version>  
+    <relativePath/>  
+    <!-- lookup parent from repository --> 
+  </parent>  
+  <groupId>com.jpworks</groupId>  
+  <artifactId>ws-employee-az</artifactId>  
+  <version>1.0.1-SNAPSHOT</version>  
+  <name>employee</name>  
+  <description>Employee services. Microservice Demo in Spring Boot 2.3.3 with Spring Data JDBC 2</description>  
+  <properties>
+    <!-- Project configuration -->
+    <java.version>14</java.version>
+    <springboot.version>2.3.3.RELEASE</springboot.version>
+
+    <!-- Docker configuration -->
+    <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
+    <docker.image.prefix>jpworks.azurecr.io</docker.image.prefix>
+  </properties>
+  <dependencies> 
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-data-jdbc</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-web</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.projectlombok</groupId>  
+      <artifactId>lombok</artifactId>  
+      <optional>true</optional> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-test</artifactId>  
+      <scope>test</scope>  
+      <exclusions> 
+        <exclusion> 
+          <groupId>org.junit.vintage</groupId>  
+          <artifactId>junit-vintage-engine</artifactId> 
+        </exclusion> 
+      </exclusions> 
+    </dependency>  
+    <!-- PostgreSQL -->  
+    <dependency> 
+      <groupId>org.postgresql</groupId>  
+      <artifactId>postgresql</artifactId>  
+      <scope>runtime</scope> 
+    </dependency>  
+
+    <!-- swagger -->  
+    <dependency> 
+      <groupId>org.springdoc</groupId>  
+      <artifactId>springdoc-openapi-ui</artifactId>  
+      <version>1.4.6</version> 
+    </dependency> 
+  </dependencies>  
+  <build> 
+    <plugins> 
+      <plugin> 
+        <groupId>org.springframework.boot</groupId>  
+        <artifactId>spring-boot-maven-plugin</artifactId>  
+        <version>${springboot.version}</version>  
+        <executions> 
+          <execution> 
+            <goals> 
+              <goal>build-info</goal> 
+            </goals> 
+          </execution> 
+        </executions> 
+      </plugin>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>${jib-maven-plugin.version}</version>
+        <configuration>
+          <from>
+            <image>adoptopenjdk/openjdk14:alpine-jre</image>
+          </from>
+          <to>
+            <image>${docker.image.prefix}/${project.artifactId}</image>
+          </to>
+        </configuration>
+      </plugin>
+    </plugins> 
+  </build> 
+</project>
