@@ -71,3 +71,8 @@ docker build -t jpworks/ws-employee-az .
 
 Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
 ```
+
+Run the image, replace the values of the environmental variables with your database connection:
+```bash
+docker run jpworks/ws-employee-az -d -p 80:80 -e DATABASE_URL='jdbc:postgresql://ec2-54.compute-1.amazonaws.com:5432/dcfcb4766bbcc' -e DATABASE_USER='user' -e DATABASE_PASSWORD='password'
+```
