@@ -51,7 +51,7 @@ mvn clean package spring-boot:run
 ```
 
 ### Dockerized Application
-Create with docker a local container for testing the image. In this example we are going to name the repository: jpworks/ws-employee-az. Everytime you update your code and create an image be sure to run 'mvn clean package'  
+Create a local container with docker and test the image. In this example we are going to name the repository: jpworks/ws-employee-az. Everytime you update your code and create an image be sure to run 'mvn clean package'  
 ```bash
 docker build -t jpworks/ws-employee-az:1.0.3 .
 
@@ -105,12 +105,18 @@ jpworks/ws-employee-az:1.0.3
 ```
 
 ### Deploy image manually to Azure Container registry
-
+Deploying the docker image to Azure Registry is accomplished using de Azure command line and jib-maven-plugin, which is configured in the POM.xml
+First we need to log in Azure
 ```bash
 az acr login -n myloginserver.azurecr.io
 
 The login server endpoint suffix '.azurecr.io' is automatically omitted.
 Login Succeeded
+```
+
+Then run the maven jib plugin
+```bash
+mvn clean compile jib:build
 ```
 
 ### Deploy image to azure using GitHub Actions
