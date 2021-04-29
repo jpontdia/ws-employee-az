@@ -17,7 +17,7 @@ The tech stack for this POC is:
 * Docker - https://www.docker.com/products/docker-desktop
 * Postgresql - https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 * Azure CLI - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
-* A free account of Azure
+* An Azure free account
 
 ### Database
 Next is the database entity model:
